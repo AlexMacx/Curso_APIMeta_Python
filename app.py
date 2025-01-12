@@ -133,9 +133,15 @@ def enviar_mensajes_whatsapp(texto, numero):
         phone_number_id = "500359583168203"
         url_request = "/v21.0/"+phone_number_id+"/messages"
         print(url_request)
+        #Logging
+        
+        agregar_mensajes_log(json.dumps(url_request))
+
         connection.request("POST",url_request, data, headers)
         response = connection.getresponse()
-        print(response.status, response.reason)
+        
+        agregar_mensajes_log(json.dumps(response.status))
+        agregar_mensajes_log(json.dumps(response.reason))
     except Exception as e:
         agregar_mensajes_log(json.dumps(e))
     finally:
