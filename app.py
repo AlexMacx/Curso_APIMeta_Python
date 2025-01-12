@@ -126,9 +126,8 @@ def enviar_mensajes_whatsapp(texto, numero):
         "Content-Type" : "application/json",
         "Authorization" : bearer
     }
-    agregar_mensajes_log(json.dumps(headers))
 
-    connection = http.client.HTTPSConnection("https://graph.facebook.com")
+    connection = http.client.HTTPConnection("graph.facebook.com")
 
     try:
         phone_number_id = "500359583168203"
