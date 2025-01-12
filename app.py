@@ -70,8 +70,22 @@ def recibir_mensajes(req):
         changes = entry['changes'][0]
         value = changes['value']
         objeto_mensaje = value['messages']
+        
+        if objeto_mensaje:
+            messages = objeto_mensaje[0]
 
-        agregar_mensajes_log(json.dumps(objeto_mensaje))
+            if 'type' in messages:
+                tipo = messages['type']
+
+                if tipo == 'interactive':
+                    return 0
+                
+                if 'text' in messages:
+                    texto = messages['text']['body']
+                    numero = messages['from']
+
+                    agregar_mensajes_log(json.dumps(texto))
+                    agregar_mensajes_log(json.dumps(numero))
 
         return jsonify({'message':'EVENT_RECEIVED'})
     except Exception as e:
