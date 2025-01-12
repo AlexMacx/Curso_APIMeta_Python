@@ -120,10 +120,11 @@ def enviar_mensajes_whatsapp(texto, numero):
         }
     #Convertir el diccionario a formato JSON
     data = json.dumps(data)
-
+    tkn = "EAApgHYrrpPkBOweOWZAnaZCMqpKS1bowL1SZAqHLcmZAmfrvZC3vghfJRdfj1q9gaZALv1iswXHDjQGEobT5znJlJ9wc8mfoTyJZALZC62zKrSC2Ty7BODelHoZBBZBSV8osz6zvuNNlZAk1riHk6u3ttKz33G9wl1oMVKZBRdO5d0HsYZAqFFyfqcZBZBawcNXk2blNYzJi0fGB4eJj6jc7nn8RnjO7SQlL3oZC9PUITZBPz4ORm"
+    bearer = "Bearer {tkn}".format(tkn)
     headers = {
         "Content-Type" : "application/json",
-        "Authorization" : "Bearer EAApgHYrrpPkBOweOWZAnaZCMqpKS1bowL1SZAqHLcmZAmfrvZC3vghfJRdfj1q9gaZALv1iswXHDjQGEobT5znJlJ9wc8mfoTyJZALZC62zKrSC2Ty7BODelHoZBBZBSV8osz6zvuNNlZAk1riHk6u3ttKz33G9wl1oMVKZBRdO5d0HsYZAqFFyfqcZBZBawcNXk2blNYzJi0fGB4eJj6jc7nn8RnjO7SQlL3oZC9PUITZBPz4ORm"
+        "Authorization" : bearer
     }
 
     connection = http.client.HTTPSConnection("graph.facebook.com")
