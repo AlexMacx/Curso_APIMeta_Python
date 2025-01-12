@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import http.client
 import json
 
 app = Flask(__name__)
@@ -91,6 +92,52 @@ def recibir_mensajes(req):
     except Exception as e:
         return jsonify({'message':'EVENT_RECEIVED'})
 
+def enviar_mensajes_whatsapp(texto, numero):
+    texto = texto.lower()
+
+    if 'hola' in texto:
+        data={  
+            "messaging_product": "whatsapp",    
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": " Hola, ¿Cómo estás? Bienvenido."
+            }
+        }
+    else:
+        data={  
+            "messaging_product": "whatsapp",    
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": "Hola, aquí ira otro texto..."
+            }
+        }
+    #Convertir el diccionario a formato JSON
+    data = json.dumps(data)
+
+    headers = {
+        "Content-Type" : "application/json",
+        "Authorization" : "Bearer EAApgHYrrpPkBOweOWZAnaZCMqpKS1bowL1SZAqHLcmZAmfrvZC3vghfJRdfj1q9gaZALv1iswXHDjQGEobT5znJlJ9wc8mfoTyJZALZC62zKrSC2Ty7BODelHoZBBZBSV8osz6zvuNNlZAk1riHk6u3ttKz33G9wl1oMVKZBRdO5d0HsYZAqFFyfqcZBZBawcNXk2blNYzJi0fGB4eJj6jc7nn8RnjO7SQlL3oZC9PUITZBPz4ORm"
+    }
+
+    connection = http.client.HTTPSConnection("graph.facebook.com")
+
+    try:
+        phone_number_id = "500359583168203"
+        url_request = "/v21.0/{phone_number_id}/messages".format(phone_number_id)
+        print(url_request)
+        connection.request("POST",url_request, data, headers)
+        response = connection.getresponse()
+        print(response.status, response.reason)
+    except Exception as e:
+        agregar_mensajes_log(json.dumps(e))
+    finally:
+        connection.close()
 
 if __name__=='__main__':
     app.run(host='0.0.0.0',port=80,debug=True)
