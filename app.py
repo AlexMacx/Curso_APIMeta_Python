@@ -127,7 +127,7 @@ def enviar_mensajes_whatsapp(texto, numero):
         "Authorization" : bearer
     }
 
-    connection = http.client.HTTPConnection("graph.facebook.com")
+    connection = http.client.HTTPSConnection("graph.facebook.com")
 
     try:
         phone_number_id = "500359583168203"
@@ -135,11 +135,10 @@ def enviar_mensajes_whatsapp(texto, numero):
         print(url_request)
         #Logging
 
-        agregar_mensajes_log(json.dumps(url_request))
-
         connection.request("POST",url_request, data, headers)
         response = connection.getresponse()
         
+        agregar_mensajes_log(json.dumps(url_request))
         agregar_mensajes_log(json.dumps(response.status))
         agregar_mensajes_log(json.dumps(response.reason))
     except Exception as e:
