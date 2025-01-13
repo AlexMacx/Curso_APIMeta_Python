@@ -74,10 +74,11 @@ def recibir_mensajes(req):
         
         if objeto_mensaje:
             messages = objeto_mensaje[0]
-
+            #Guardando logs en DB
+            agregar_mensajes_log(json.dumps(messages))
             if 'type' in messages:
                 tipo = messages['type']
-
+                
                 if tipo == 'interactive':
                     return 0
                 
