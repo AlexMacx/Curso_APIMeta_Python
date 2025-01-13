@@ -97,8 +97,8 @@ def enviar_mensajes_whatsapp(texto, numero):
     texto = texto.lower()
 
     if 'hola' in texto:
-        data={  
-            "messaging_product": "whatsapp",    
+        data={
+            "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": numero,
             "type": "text",
@@ -108,8 +108,8 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
     else:
-        data={  
-            "messaging_product": "whatsapp",    
+        data={
+            "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": numero,
             "type": "text",
