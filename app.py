@@ -74,11 +74,11 @@ def recibir_mensajes(req):
         
         if objeto_mensaje:
             messages = objeto_mensaje[0]
-            #Guardando logs en DB
-            agregar_mensajes_log(json.dumps(messages))
+            
             if 'type' in messages:
                 tipo = messages['type']
-                
+                #Guardando logs en DB
+                agregar_mensajes_log(json.dumps(messages))
                 if tipo == 'interactive':
                     return 0
                 
@@ -251,7 +251,7 @@ def enviar_mensajes_whatsapp(texto, numero):
     #Convertir el diccionario a formato JSON
     data = json.dumps(data)
 
-    tkn = "EAApgHYrrpPkBO6WBxYdiJLwjNz69VPbZBXulHPDnFeFaODrSUtbZCFXQDUBDRePSvRE8W1zNUYugb1fGJAFaswR9OL8ZCNpGxx8GuqRC04LQoxtRxwQnKRZCvWOmec9J89LuTDhmVLO41SrrLICM4o8GYmqsTcjnkZCIMuZCRcSs5YvGe6cYOc6YND8eqLqFqqN9yHhemhrZAd9jKFIWW8SVZC8E7Hm11kU558yNW4AU"
+    tkn = "EAApgHYrrpPkBOzNSiikBEiqTrCeM09R3wPyUZBSncI1iDw2yFvqedCgjGvvpkQ7pdB0zzTOx93eDR4PffXtawuQ9bv5z8vgOWpZCrxCiQkVs9NHRoe0z0xbZBxZBaUoh1SXjlkwHSMwXucxg8KXWDSWJwBacShXFg2ytx0xhuedcpHLykeZABWmgpsCQAJ6Cs69ZAK0uji62fpY4p7hHWX1LF7XudllHUNSJQnXKxM"
     bearer = "Bearer "+tkn
 
     headers = {
@@ -267,9 +267,9 @@ def enviar_mensajes_whatsapp(texto, numero):
         response = connection.getresponse()
         
         agregar_mensajes_log(json.dumps(numero))
-        agregar_mensajes_log(json.dumps(response.status))
-        agregar_mensajes_log(json.dumps(response.reason))
-        agregar_mensajes_log(json.dumps(response.read().decode()))
+        #agregar_mensajes_log(json.dumps(response.status))
+        #agregar_mensajes_log(json.dumps(response.reason))
+        #agregar_mensajes_log(json.dumps(response.read().decode()))
     except Exception as e:
         agregar_mensajes_log(json.dumps(e))
     finally:
