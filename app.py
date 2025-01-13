@@ -85,7 +85,7 @@ def recibir_mensajes(req):
                     texto = messages['text']['body']
                     numero = messages['from']
                     if(len(numero)==13):
-                        numero = '52'+numero.split('521')
+                        numero = numero[0:2]+numero[3:]
                     #agregar_mensajes_log(json.dumps(texto))
                     #agregar_mensajes_log(json.dumps(numero))
                     enviar_mensajes_whatsapp(texto, numero)
