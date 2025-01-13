@@ -282,6 +282,60 @@ def enviar_mensajes_whatsapp(texto, numero):
                 "body": "Estaré a la espera."
             }
         }
+    elif "lista" in texto:
+        data = {
+            "to": numero,
+            "recipient_type": "individual",
+            "type": "interactive",
+            "interactive": {
+                "type": "list",
+                "header": {
+                    "type": "text",
+                    "text": "Este es el header"
+                },
+                "body": {
+                    "text": "Selecciona algúna opción."
+                },
+                "footer": {
+                    "text": "Selecciona una de las opciones para poder ayudarte."
+                },
+                "action": {
+                    "button": "Ver Opciones",
+                    "sections":[
+                        {
+                            "title":"Compra y Venta",
+                            "rows": [
+                                {
+                                    "id":"btncompra",
+                                    "title": "Comprar",
+                                    "description": "Compra los mejores artículos de tecnología."
+                                },
+                                {
+                                    "id":"btnventa",
+                                    "title": "Vender",
+                                    "description": "Vende lo que ya no estes usando."
+                                }
+                            ]
+                        },
+                        {
+                            "title":"Distribución y Entrega",
+                            "rows": [
+                                {
+                                    "id":"btnlocal",
+                                    "title": "Local",
+                                    "description": "Compra los mejores artículos de tecnología."
+                                },
+                                {
+                                    "id":"btnentrega",
+                                    "title": "Entrega",
+                                    "description": "La entrega se realiza todos los días."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
     else:
         data={
             "messaging_product": "whatsapp",
@@ -296,7 +350,7 @@ def enviar_mensajes_whatsapp(texto, numero):
     #Convertir el diccionario a formato JSON
     data = json.dumps(data)
 
-    tkn = "EAApgHYrrpPkBOzNSiikBEiqTrCeM09R3wPyUZBSncI1iDw2yFvqedCgjGvvpkQ7pdB0zzTOx93eDR4PffXtawuQ9bv5z8vgOWpZCrxCiQkVs9NHRoe0z0xbZBxZBaUoh1SXjlkwHSMwXucxg8KXWDSWJwBacShXFg2ytx0xhuedcpHLykeZABWmgpsCQAJ6Cs69ZAK0uji62fpY4p7hHWX1LF7XudllHUNSJQnXKxM"
+    tkn = "EAApgHYrrpPkBO2eNvItoCklPZChh6UON6kZAQzlcP1Qeipuf5U68v5hVmLILSzdfiTKHVVJoL3WsWO6RESypQHTobuxXtE0DeBss640ZBuYaKLv9JAdvbW5XzkkF3qHw34sflI1doZAw55D4ZCBFpSWuu2Rg9GcAgoexLGC99Ljn5yZBaOzrmIIqbOZAOMQ6ZBJ34hPXtclMKZAoKX6eFqAIHS8ylKEUnf7w4ej943sU4"
     bearer = "Bearer "+tkn
 
     headers = {
