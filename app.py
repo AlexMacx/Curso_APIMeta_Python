@@ -121,7 +121,7 @@ def enviar_mensajes_whatsapp(texto, numero):
     #Convertir el diccionario a formato JSON
     data = json.dumps(data)
 
-    tkn = "EAApgHYrrpPkBO6prfKZCI7ZBVcOmGCjukQEPShNxn5vZCTHXW97XRpZBENYMB6byFySR9VTqeu8tEOBTC5Q2U70nFnhucxTMvUuDxY5mTl7EeletuZA5m0ExddFQiRhrKUb4wJwskZCFFi7BKBmQAZBAPUla9NbBItRQGdA1yv6qS4t893f0UMzXuYBtzZAtsZBiJS23x7sZAlqgTmi4S5ZCduBQD9jERwV4Bfj6QWRQ0aG"
+    tkn = "EAApgHYrrpPkBO4btswwrA9XZB6A1M3yvlJcGNPzJiZAL408gldsuRzkZB6im9Ey10ZClKZBi5VKPZBHwZCXQ4suGM4bo07acyfIcqe6cLaDoCYoeFG5H06ag4DMVWh1bgOO6NrkJnRardjCiTNRZBhRuI3zH0chgLHEpPKf5o73V47lenHweQzgpHZBCoYPLSZBfm3IXhrlAmdlzleUroZAMOBVEz28NCfhjjjJHyMqC6BH"
     bearer = "Bearer "+tkn
 
     headers = {
@@ -136,7 +136,7 @@ def enviar_mensajes_whatsapp(texto, numero):
         connection.request("POST","/v21.0/500359583168203/messages", data, headers) 
         response = connection.getresponse()
         
-        agregar_mensajes_log(json.dumps(url_req))
+        agregar_mensajes_log(json.dumps(numero))
         agregar_mensajes_log(json.dumps(response.status))
         agregar_mensajes_log(json.dumps(response.reason))
         agregar_mensajes_log(json.dumps(response.read().decode()))
