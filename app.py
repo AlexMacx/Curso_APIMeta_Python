@@ -123,7 +123,7 @@ def enviar_mensajes_whatsapp(texto, numero):
 
     tkn = "EAApgHYrrpPkBO6prfKZCI7ZBVcOmGCjukQEPShNxn5vZCTHXW97XRpZBENYMB6byFySR9VTqeu8tEOBTC5Q2U70nFnhucxTMvUuDxY5mTl7EeletuZA5m0ExddFQiRhrKUb4wJwskZCFFi7BKBmQAZBAPUla9NbBItRQGdA1yv6qS4t893f0UMzXuYBtzZAtsZBiJS23x7sZAlqgTmi4S5ZCduBQD9jERwV4Bfj6QWRQ0aG"
     bearer = "Bearer "+tkn
-    
+
     headers = {
         "Content-Type" : "application/json",
         "Authorization" : bearer
@@ -133,12 +133,13 @@ def enviar_mensajes_whatsapp(texto, numero):
 
     try:
         url_req = "/v21.0/500359583168203/messages"
-        connection.request("POST","/v21.0/500359583168203/messages", data, headers)
+        connection.request("POST","/v21.0/500359583168203/messages", data, headers) 
         response = connection.getresponse()
         
         agregar_mensajes_log(json.dumps(url_req))
         agregar_mensajes_log(json.dumps(response.status))
         agregar_mensajes_log(json.dumps(response.reason))
+        agregar_mensajes_log(json.dumps(response.read().decode()))
     except Exception as e:
         agregar_mensajes_log(json.dumps(e))
     finally:
