@@ -95,6 +95,13 @@ def recibir_mensajes(req):
 
                         enviar_mensajes_whatsapp(texto, numero)
 
+                    if tipo_interactivo == "list_reply":
+                        texto = messages["interactive"]["list_reply"]["id"]
+                        numero = messages['from']
+                        numero = extrae_numero(numero)
+
+                        enviar_mensajes_whatsapp(texto, numero)
+
                 
                 if 'text' in messages:
                     texto = messages['text']['body']
@@ -293,7 +300,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                 "type": "list",
                 "header": {
                     "type": "text",
-                    "text": "Este es el header"
+                    "text": "Opciones MC"
                 },
                 "body": {
                     "text": "Selecciona algúna opción."
@@ -308,12 +315,12 @@ def enviar_mensajes_whatsapp(texto, numero):
                             "title":"Compra y Venta",
                             "rows": [
                                 {
-                                    "id":"btncompra",
+                                    "id":"chkcompra",
                                     "title": "Comprar",
                                     "description": "Compra los mejores artículos de tecnología."
                                 },
                                 {
-                                    "id":"btnventa",
+                                    "id":"chkventa",
                                     "title": "Vender",
                                     "description": "Vende lo que ya no estes usando."
                                 }
@@ -323,12 +330,12 @@ def enviar_mensajes_whatsapp(texto, numero):
                             "title":"Distribución y Entrega",
                             "rows": [
                                 {
-                                    "id":"btnlocal",
+                                    "id":"chklocal",
                                     "title": "Local",
                                     "description": "Compra los mejores artículos de tecnología."
                                 },
                                 {
-                                    "id":"btnentrega",
+                                    "id":"chkentrega",
                                     "title": "Entrega",
                                     "description": "La entrega se realiza todos los días."
                                 }
@@ -336,6 +343,51 @@ def enviar_mensajes_whatsapp(texto, numero):
                         }
                     ]
                 }
+            }
+        }
+    elif "chkcompra" in texto:
+        data = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": "Muchas gracias por tu compra, este es el resumen."
+            }
+        }
+    elif "chkventa" in texto:
+        data = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": "Tu producto está a punto de tener mucha suerte."
+            }
+        }
+    elif "chklocal" in texto:
+        data = {
+            "messaging_product": "whatsapp",
+            "to": numero,
+            "type": "location",
+            "location": {
+                "latitude": "-12.067158831865067",
+                "longitude": "-77.03377940839486",
+                "name": "Matriz de distribución",
+                "address": "Calle 1 equina calle 2"
+            }
+        }
+    elif "chkentrega" in texto:
+        data = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": "Compartenos tu dirreción para agendar entrega"
             }
         }
     else:
