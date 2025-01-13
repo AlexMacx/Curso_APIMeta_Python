@@ -115,13 +115,15 @@ def enviar_mensajes_whatsapp(texto, numero):
             "type": "text",
             "text": {
                 "preview_url": False,
-                "body": "Hola, aquí ira otro texto..."
+                "body": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
             }
         }
     #Convertir el diccionario a formato JSON
     data = json.dumps(data)
+
     tkn = "EAApgHYrrpPkBO6prfKZCI7ZBVcOmGCjukQEPShNxn5vZCTHXW97XRpZBENYMB6byFySR9VTqeu8tEOBTC5Q2U70nFnhucxTMvUuDxY5mTl7EeletuZA5m0ExddFQiRhrKUb4wJwskZCFFi7BKBmQAZBAPUla9NbBItRQGdA1yv6qS4t893f0UMzXuYBtzZAtsZBiJS23x7sZAlqgTmi4S5ZCduBQD9jERwV4Bfj6QWRQ0aG"
     bearer = "Bearer "+tkn
+    
     headers = {
         "Content-Type" : "application/json",
         "Authorization" : bearer
@@ -130,15 +132,11 @@ def enviar_mensajes_whatsapp(texto, numero):
     connection = http.client.HTTPSConnection("graph.facebook.com")
 
     try:
-        phone_number_id = "500359583168203"
-        url_request = "/v21.0/"+phone_number_id+"/messages"
-        print(url_request)
-        #Logging
-
-        connection.request("POST",url_request, data, headers)
+        url_req = "/v21.0/500359583168203/messages"
+        connection.request("POST","/v21.0/500359583168203/messages", data, headers)
         response = connection.getresponse()
         
-        agregar_mensajes_log(json.dumps(url_request))
+        agregar_mensajes_log(json.dumps(url_req))
         agregar_mensajes_log(json.dumps(response.status))
         agregar_mensajes_log(json.dumps(response.reason))
     except Exception as e:
