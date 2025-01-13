@@ -94,6 +94,7 @@ def recibir_mensajes(req):
                         numero = extrae_numero(numero)
 
                         enviar_mensajes_whatsapp(texto, numero)
+
                 
                 if 'text' in messages:
                     texto = messages['text']['body']
@@ -284,6 +285,7 @@ def enviar_mensajes_whatsapp(texto, numero):
         }
     elif "lista" in texto:
         data = {
+            "messaging_product": "whatsapp",
             "to": numero,
             "recipient_type": "individual",
             "type": "interactive",
