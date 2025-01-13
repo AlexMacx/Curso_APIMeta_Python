@@ -63,6 +63,12 @@ def verificar_token(req):
         return challenge
     else:
         return jsonify({'error':'Token invalido'}), 401
+    
+def extrae_numero(numFrom):
+    if(len(numFrom)==13):
+        return numFrom[0:2]+numFrom[3:]
+    else:
+        return numFrom
 
 def recibir_mensajes(req):
     try:
@@ -74,23 +80,29 @@ def recibir_mensajes(req):
         
         if objeto_mensaje:
             messages = objeto_mensaje[0]
-            
+            init_log_str = "Entro: recibir mensajes - if "
             if 'type' in messages:
                 tipo = messages['type']
                 #Guardando logs en DB
-                agregar_mensajes_log(json.dumps(messages))
+                agregar_mensajes_log(init_log_str+"type: "+json.dumps(messages))
                 if tipo == 'interactive':
-                    return 0
+                    tipo_interactivo = messages["interactive"]["type"]
+
+                    if tipo_interactivo == "button_reply":
+                        texto = messages["interactive"]["button_reply"]["id"]
+                        numero = messages['from']
+                        numero = extrae_numero(numero)
+
+                        enviar_mensajes_whatsapp(texto, numero)
                 
                 if 'text' in messages:
                     texto = messages['text']['body']
                     numero = messages['from']
-                    if(len(numero)==13):
-                        numero = numero[0:2]+numero[3:]
+                    numero = extrae_numero(numero)
                     
                     enviar_mensajes_whatsapp(texto, numero)
                     #Guardando logs en BD
-                    agregar_mensajes_log(json.dumps(messages))
+                    #agregar_mensajes_log(init_log_str+"type: "+json.dumps(messages))
 
         return jsonify({'message':'EVENT_RECEIVED'})
     except Exception as e:
@@ -235,6 +247,39 @@ def enviar_mensajes_whatsapp(texto, numero):
                         }
                     ]
                 }
+            }
+        }
+    elif "btnsi" in texto:
+        data = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": "Muchas gracias por aceptar."
+            }
+        }
+    elif "btnno" in texto:
+        data = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": "Es una lastima."
+            }
+        }
+    elif "btnmaybe" in texto:
+        data = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": "Estaré a la espera."
             }
         }
     else:
